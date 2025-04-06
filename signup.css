@@ -189,3 +189,29 @@ p {
         width: 60%;
     }
 }
+
+
+
+/*  */
+/* Flash Message Styling */
+.flash-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.success-message {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+

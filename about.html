@@ -23,16 +23,30 @@
     <nav>
         <ul>
             <li><a href="home.html">Home</a></li>
-                <li><a href="process.html">How It Works</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="sell.html">Sell</a></li>
-                <li><a href="redeem.html">Redeem</a></li>
-                <!--<li><a href="about.html">About us</a></li>-->
-                <li><a href="#">Smart Collection</a></li>
-                <li><a href="help.html">Help</a></li>
-                <li><a href="login.html">Login</a></li>
+            <li><a href="process.html">How It Works</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="sell.html">Sell</a></li>
+            <li><a href="redeem.html">Redeem</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="help.html">Help</a></li>
+         
+            <li id="auth-link"></li>
         </ul>
     </nav>
+
+    <script>
+        // Fetch authentication status from the server
+        fetch("/auth/status")
+            .then((response) => response.json())
+            .then((data) => {
+                const authLink = document.getElementById("auth-link");
+                if (data.isAuthenticated) {
+                    authLink.innerHTML = `<a href="/logout">Logout</a>`;
+                } else {
+                    authLink.innerHTML = `<a href="/login">Login</a>`;
+                }
+            });
+    </script>
 </header>
 <!-- Hero Section -->
 <section class="hero">
@@ -59,11 +73,11 @@
                     <div class="card-front">
                         <img src="assets/A.jpg" alt="Arkaneell Roy">
                         <h3>Arkaneell Roy</h3>
-                        <p>Founder & Sustainability Expert</p>
+                        <p>AI-ML Developer</p>
                     </div>
                     <div class="card-back">
                         <h3>Arkaneell Roy</h3>
-                        <p>Driving innovation in <b>eco-friendly solutions</b> and <b>e-waste recycling</b>.</p>
+                        <p>Specialist in <b>AI-driven waste management</b> and <b>green technology</b>.</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +92,7 @@
                     </div>
                     <div class="card-back">
                         <h3>Kaushik Majee</h3>
-                        <p>Specialist in <b>AI-driven waste management</b> and <b>green technology</b>.</p>
+                        <p>Driving innovation in <b>eco-friendly solutions</b> and <b>e-waste recycling</b>.</p>
                     </div>
                 </div>
             </div>
@@ -89,11 +103,12 @@
                     <div class="card-front">
                         <img src="assets/maiti.jpg" alt="Aritra Maity">
                         <h3>Aritra Maity</h3>
-                        <p>Operations Head</p>
+                        <p>Full-Stack Developer</p>
                     </div>
                     <div class="card-back">
                         <h3>Aritra Maity</h3>
-                        <p>Ensures efficient <b>e-waste collection</b> and <b>logistics</b>.</p>
+                        <p>Ensures efficient working of <b>ez-waste website</b></p>
+                        
                     </div>
                 </div>
             </div>
@@ -104,11 +119,11 @@
                     <div class="card-front">
                         <img src="assets/ankan.jpg" alt="Ankan Saha">
                         <h3>Ankan Saha</h3>
-                        <p>Public Relations</p>
+                        <p>Operation Lead</p>
                     </div>
                     <div class="card-back">
                         <h3>Ankan Saha</h3>
-                        <p>Raising awareness about <b>eco-conscious e-waste disposal</b>.</p>
+                        <p>Ensures efficient <b>e-waste collection</b> and <b>logistics</b>.</p>
                     </div>
                 </div>
             </div>

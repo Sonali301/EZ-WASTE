@@ -17,12 +17,26 @@
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="sell.html">Sell</a></li>
                 <li><a href="redeem.html">Redeem</a></li>
-                <!--<li><a href="about.html">About us</a></li>
-                <li><a href="#">Smart Collection</a></li>-->
+                 <!--<li><a href="#features">Features</a></li>-->
                 <li><a href="help.html">Help</a></li>
-                <li><a href="login.html">Login</a></li>
+             
+                <li id="auth-link"></li>
             </ul>
         </nav>
+
+        <script>
+            // Fetch authentication status from the server
+            fetch("/auth/status")
+                .then((response) => response.json())
+                .then((data) => {
+                    const authLink = document.getElementById("auth-link");
+                    if (data.isAuthenticated) {
+                        authLink.innerHTML = `<a href="/logout">Logout</a>`;
+                    } else {
+                        authLink.innerHTML = `<a href="/login">Login</a>`;
+                    }
+                });
+        </script>
     </header>
 
     <section class="how-it-works">

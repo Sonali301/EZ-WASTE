@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Payment Method</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f3f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .payment-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        .payment-container h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background-color: white;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .payment-option:hover {
+            border-color: #2874f0;
+            background-color: #e8f0ff;
+        }
+        .payment-option img {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+        }
+        .payment-option span {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Select Payment Method</h2>
+        <div class="payment-options">
+            <div class="payment-option" onclick="redirectTo('qr.html')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png" alt="QR">
+                <span>Pay with QR Code</span>
+            </div>
+            <div class="payment-option" onclick="redirectTo('netbanking.html')">
+                <img src="https://cdn-icons-png.flaticon.com/512/2258/2258998.png" alt="Net Banking">
+                <span>Net Banking</span>
+            </div>
+            <div class="payment-option" onclick="redirectTo('card-payment.html')">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733244.png" alt="Card">
+                <span>Debit/Credit Card</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

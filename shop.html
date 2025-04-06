@@ -6,8 +6,25 @@
     <title>E-Waste Shop</title>
     <link rel="stylesheet" href="shop.css">
     <script src="shop.js" defer></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </head>
 <body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const logoutLink = document.getElementById('logout-link');
+    
+            if (currentUser && currentUser.email) {
+                // User is logged in, show the logout button
+                logoutLink.style.display = 'block';
+            } else {
+                // User is not logged in, hide the logout button
+                logoutLink.style.display = 'none';
+            }
+        });
+    </script>
 
     <!-- Header -->
     <header>
@@ -19,13 +36,27 @@
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="sell.html">Sell</a></li>
                 <li><a href="redeem.html">Redeem</a></li>
-                <!--<li><a href="about.html">About us</a></li>
-                <li><a href="#">Smart Collection</a></li>-->
                 <li><a href="help.html">Help</a></li>
-                <li><a href="login.html">Login</a></li>
+         
+                <li id="auth-link"></li>
+       
             </ul>
         </nav>
     </header>
+
+    <script>
+        // Fetch authentication status from the server
+        fetch("/auth/status")
+            .then((response) => response.json())
+            .then((data) => {
+                const authLink = document.getElementById("auth-link");
+                if (data.isAuthenticated) {
+                    authLink.innerHTML = `<a href="/logout">Logout</a>`;
+                } else {
+                    authLink.innerHTML = `<a href="/login">Login</a>`;
+                }
+            });
+    </script>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -40,61 +71,8 @@
     <div class="main-content">
         <!-- Product Section -->
         <section class="shop">
-            <div class="product-container">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <img src="assets/jw.jpeg" alt="Recycled Jewelry">
-                    <div class="product-info">
-                        <h2>Recycled Metal Jewelry</h2>
-                        <p>Stylish jewelry made from e-waste metals.</p>
-                        <span class="price">₹2000</span>
-                        <button class="add-to-cart" onclick="addToCart('Recycled Metal Jewelry', 2000, 'assets/jw.jpeg', this)">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <img src="assets/g1.jpeg" alt="Upcycled Gadgets">
-                    <div class="product-info">
-                        <h2>Upcycled Tech Gadgets</h2>
-                        <p>Refurbished laptops, phones, and tablets.</p>
-                        <span class="price">₹12000</span>
-                        <button class="add-to-cart" onclick="addToCart('Upcycled Tech Gadgets', 12000, 'assets/g1.jpeg', this)">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <img src="assets/h.jpg" alt="Home Decor">
-                    <div class="product-info">
-                        <h2>Eco-Friendly Home Décor</h2>
-                        <p>Wall art and furniture from circuit boards.</p>
-                        <span class="price">₹3750</span>
-                        <button class="add-to-cart" onclick="addToCart('Eco-Friendly Home Décor', 3750, 'assets/h.jpg', this)">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <img src="assets/p1.jpeg" alt="Power Banks">
-                    <div class="product-info">
-                        <h2>Recycled Power Banks</h2>
-                        <p>Power banks made from old laptop batteries.</p>
-                        <span class="price">₹2500</span>
-                        <button class="add-to-cart" onclick="addToCart('Recycled Power Banks', 2500, 'assets/p1.jpeg', this)">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <img src="assets/pc.jpeg" alt="Phone Case">
-                    <div class="product-info">
-                        <h2>Recycled Plastic Phone Cases</h2>
-                        <p>Durable and eco-friendly phone cases.</p>
-                        <span class="price">₹1200</span>
-                        <button class="add-to-cart" onclick="addToCart('Recycled Plastic Phone Cases', 1200, 'assets/pc.jpeg', this)">Add to Cart</button>
-                    </div>
-                </div>
+            <div class="product-container" id="product-list">
+                <!-- Products will be dynamically loaded here -->
             </div>
         </section>
     </div>
@@ -106,8 +84,8 @@
     <div id="cart-sidebar" class="cart-sidebar">
         <h2>Your Cart</h2>
         <ul id="cart-items"></ul>
-        <div class="cart-total">Total: ₹<span id="cart-total">0</span></div>
-        <button class="checkout-btn">Checkout</button>
+        <div class="cart-total">Total: <span id="cart-total">0</span></div>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
         <button class="close-cart" onclick="toggleCart()">Close</button>
     </div>
 

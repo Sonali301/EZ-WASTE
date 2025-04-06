@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f1f3f6;
+        }
+        .payment-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .payment-container:hover {
+            transform: scale(1.05);
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            background: url('assets/qr.jpg') no-repeat center;
+            background-size: cover;
+        }
+        .payment-options button {
+            background-color: #2874f0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .payment-options button:hover {
+            background-color: #1a5bbf;
+        }
+        #timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Complete Your Payment</h2>
+        <p>Scan the QR code to pay with any UPI app</p>
+        <div class="qr-code"></div>
+        <p id="timer">Time Left: 5:00</p>
+        <div class="payment-options">
+            <button onclick="payWith('GPay')">Pay with GPay</button>
+            <button onclick="payWith('Paytm')">Pay with Paytm</button>
+            <button onclick="payWith('PhonePe')">Pay with PhonePe</button>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 300; // 5 minutes
+        function updateTimer() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer").innerText = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                alert("Time expired! Please try again.");
+            }
+        }
+        updateTimer();
+
+        function payWith(method) {
+            alert(`Redirecting to ${method} payment...`);
+        }
+    </script>
+</body>
+</html>

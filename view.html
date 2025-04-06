@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="view.css">
+    <script src="view.js" defer></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <a href="home.html">
+                <img src="assets/logo/logo1.png" alt="E-Waste AI Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="process.html">How It Works</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="sell.html">Sell</a></li>
+                <li><a href="redeem.html">Redeem</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li id="auth-link"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <script>
+        // Fetch authentication status from the server
+        fetch("/auth/status")
+            .then((response) => response.json())
+            .then((data) => {
+                const authLink = document.getElementById("auth-link");
+                if (data.isAuthenticated) {
+                    authLink.innerHTML = `<a href="/logout">Logout</a>`;
+                } else {
+                    authLink.innerHTML = `<a href="/login">Login</a>`;
+                }
+            });
+    </script>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <div class="product-details">
+            <h2 id="product-name"></h2>
+            <img id="product-image" src="" alt="Product Image">
+            <p id="product-category"></p>
+            <p id="product-price"></p>
+            <p id="product-owner"></p>
+            <button id="edit-product">Edit</button>
+            <button id="delete-product">Delete</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2025 Quadcore | <a href="#">Privacy Policy</a> | Designed by Quadcore</p>
+    </footer>
+
+</body>
+</html>

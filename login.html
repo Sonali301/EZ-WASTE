@@ -8,31 +8,39 @@
     <script src="https://code.ionicframework.com/ionicons/5.5.2/ionicons.js"></script>
 </head>
 <body>
+
+
     <div class="login-container">
         <div class="login-box">
             <!-- Logo -->
             <div class="logo-container">
-                <img src="assets/logo/logo1.png" alt="Logo"> <!-- Replace with your logo image -->
+                <img src="assets/logo/logo1.png" alt="Logo"> <!-- Replace with your logo -->
             </div>
+
+            <!-- Flash Message -->
+            <div id="flash-message" class="flash-message d-none"></div>
 
             <!-- Heading -->
             <h2>Welcome Back!</h2>
             <p>Login to access your account</p>
 
-            <!-- Email Input -->
-            <div class="input-group">
-                <input type="email" id="email" required>
-                <label for="email">Email Address</label>
-            </div>
+            <!-- Login Form -->
+            <form action="/login" method="POST" class="needs-validation" novalidate>
+                <!-- Email Input -->
+                <div class="input-group">
+                    <label for="email" class="form-label" ></label>
+                    <input name="email" id="email" type="email" class="form-control" placeholder="Email Address"required>
+                </div>
 
-            <!-- Password Input -->
-            <div class="input-group">
-                <input type="password" id="password" required>
-                <label for="password">Password</label>
-            </div>
+                <!-- Password Input -->
+                <div class="input-group">
+                    <label for="password" class="form-label"></label>
+                    <input name="password" id="password" type="password" class="form-control" placeholder="Password">  
+                </div>
 
-            <!-- Login Button -->
-            <button class="btn">Login</button>
+                <!-- Login Button -->
+                <button type="submit" class="btn">Login</button>
+            </form>
 
             <!-- Footer Links -->
             <div class="links">
@@ -41,5 +49,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Flash message handling
+        const params = new URLSearchParams(window.location.search);
+        const errorMessage = params.get("msgError");
+        const successMessage = params.get("msgSuccess");
+        const flashMessageDiv = document.getElementById("flash-message");
+
+        if (errorMessage) {
+            flashMessageDiv.textContent = errorMessage;
+            flashMessageDiv.className = "flash-message error-message";
+            flashMessageDiv.classList.remove("d-none");
+        } else if (successMessage) {
+            flashMessageDiv.textContent = successMessage;
+            flashMessageDiv.className = "flash-message success-message";
+            flashMessageDiv.classList.remove("d-none");
+        }
+    </script>
+
+
+
 </body>
 </html>

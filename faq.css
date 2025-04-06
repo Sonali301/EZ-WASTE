@@ -1,0 +1,130 @@
+/* General Styles */
+body {
+    background: #f9f9f9;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff3d00;
+}
+
+/* Hero Section */
+.faq-hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #ffffff, #f0f0f0);
+}
+
+.faq-hero h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #222;
+}
+
+.faq-hero p {
+    font-size: 20px;
+    color: #666;
+}
+
+/* FAQ Section */
+.faq-section {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.faq-container {
+    width: 60%;
+}
+
+/* FAQ Item */
+.faq-item {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+/* FAQ Question */
+.faq-question {
+    width: 100%;
+    background: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    transition: background 0.3s ease-in-out;
+}
+
+.faq-question:hover {
+    background: #f0f0f0;
+}
+
+.icon {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff3d00;
+}
+
+/* FAQ Answer */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    font-size: 16px;
+    color: #444;
+    background: #f8f8f8;
+    border-top: 1px solid #ddd;
+    transition: max-height 0.3s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .faq-container {
+        width: 90%;
+    }
+
+    .faq-hero h1 {
+        font-size: 35px;
+    }
+
+    .faq-hero p {
+        font-size: 18px;
+    }
+}

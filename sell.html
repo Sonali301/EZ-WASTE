@@ -23,13 +23,26 @@
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="sell.html">Sell</a></li>
                 <li><a href="redeem.html">Redeem</a></li>
-                <!--<li><a href="about.html">About us</a></li>
-                <li><a href="#">Smart Collection</a></li>-->
                 <li><a href="help.html">Help</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li id="auth-link"></li>
+           
             </ul>
         </nav>
     </header>
+
+    <script>
+        // Fetch authentication status from the server
+        fetch("/auth/status")
+            .then((response) => response.json())
+            .then((data) => {
+                const authLink = document.getElementById("auth-link");
+                if (data.isAuthenticated) {
+                    authLink.innerHTML = `<a href="/logout">Logout</a>`;
+                } else {
+                    authLink.innerHTML = `<a href="/login">Login</a>`;
+                }
+            });
+    </script>
 
     <!-- Main Content Section -->
     <div class="sell-container">
@@ -37,17 +50,17 @@
         <p>List your e-waste for recycling or resale.</p>
 
         <!-- Form for Selling E-Waste -->
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form id="sell-form" enctype="multipart/form-data">
             <!-- Product Name -->
             <div class="input-group">
                 <label for="product-name">Product Name</label>
-                <input type="text" id="product-name" placeholder="Enter product name" required>
+                <input type="text" id="product-name" name="name" placeholder="Enter product name" required>
             </div>
 
             <!-- Category -->
             <div class="input-group">
                 <label for="category">Category</label>
-                <select id="category" required>
+                <select id="category" name="category" required>
                     <option value="" disabled selected>Select a category</option>
                     <option value="laptop">Laptops</option>
                     <option value="mobile">Mobile Phones</option>
@@ -60,7 +73,7 @@
             <!-- Condition -->
             <div class="input-group">
                 <label for="condition">Condition</label>
-                <select id="condition" required>
+                <select id="condition" name="condition" required>
                     <option value="" disabled selected>Select condition</option>
                     <option value="working">Working</option>
                     <option value="non-working">Non-Working</option>
@@ -71,21 +84,26 @@
             <!-- Expected Price -->
             <div class="input-group">
                 <label for="price">Expected Price (₹)</label>
-                <input type="number" id="price" placeholder="Enter price" required>
+                <input type="number" id="price" name="price" placeholder="Enter price" required>
             </div>
 
             <!-- Upload Product Image -->
             <div class="upload-section">
                 <center><label for="imageUpload">Upload Product Image</label></center>
                 <div class="upload-box">
-                    <label for="camera-input" class="upload-btn">
-                        <i class="camera-icon">📷</i> Open Camera
+                    <input type="file" id="imageUpload" name="image" accept="image/*" required>
+                    <!-- <label for="camera-input" class="upload-btn"> -->
+                    <label for="imageUpload" class="upload-btn">
+                        <i class="camera-icon">📷</i> Open Camera or Choose File
                     </label>
-                    <input type="file" id="camera-input" accept="image/*" style="display: none;" onchange="handleCameraUpload(event)">
+                    <!-- <input type="file" id="camera-input" name ="image" accept="image/*" style="display: none;" onchange="handleCameraUpload(event)" required> -->
                     <br>
-                    <img id="image-preview" src="" alt="Image Preview" style="display: none; margin-top: 10px; border-radius: 8px; width: 150px; height: 150px; object-fit: cover;">
+                    <img id="image-preview" src="" alt="Image Preview" style="display: none;">
+                    <!-- <img id="image-preview" src="" alt="Image Preview" style="display: none; margin-top: 10px; border-radius: 8px; width: 150px; height: 150px; object-fit: cover;"> -->
                 </div>
             </div>
+
+           
 
             <!-- Submit Button -->
             <button type="submit" class="submit-btn">Submit Listing</button>
@@ -96,6 +114,20 @@
     <footer class="footer">
         <p>&copy; 2025 Quadcore | <a href="#">Privacy Policy</a> | Designed by Quadcore</p>
     </footer>
+
+    <!-- Authentication Check Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/auth/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.isAuthenticated) {
+                        alert('You must be logged in to access the Sell page.');
+                        window.location.href = '/login';
+                    }
+                });
+        });
+    </script>
 
 </body>
 </html>

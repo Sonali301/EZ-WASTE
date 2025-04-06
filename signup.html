@@ -10,22 +10,25 @@
 <body>
 
     <div class="signup-container">
-        <form class="signup-box">
+        <form class="signup-box" id="signup-form" action="/signup" method="POST">
+            <!-- Flash Message -->
+            <div id="flash-message" class="flash-message d-none"></div>
+
             <h2>Create Account</h2>
             <p>Sign up to get started</p>
 
             <div class="input-group">
-                <input type="text" required>
+                <input type="text" id="name" name="name" required>
                 <label>Full Name</label>
             </div>
 
             <div class="input-group">
-                <input type="email" required>
+                <input type="email" id="email" name="email" required>
                 <label>Email</label>
             </div>
 
             <div class="input-group">
-                <input type="password" required>
+                <input type="password" id="password" name="password" required>
                 <label>Password</label>
             </div>
 
@@ -36,5 +39,22 @@
         </form>
     </div>
 
+    <script>
+        // Flash message handling
+        const params = new URLSearchParams(window.location.search);
+        const errorMessage = params.get("msgError");
+        const successMessage = params.get("msgSuccess");
+        const flashMessageDiv = document.getElementById("flash-message");
+
+        if (errorMessage) {
+            flashMessageDiv.textContent = errorMessage;
+            flashMessageDiv.className = "flash-message error-message";
+            flashMessageDiv.classList.remove("d-none");
+        } else if (successMessage) {
+            flashMessageDiv.textContent = successMessage;
+            flashMessageDiv.className = "flash-message success-message";
+            flashMessageDiv.classList.remove("d-none");
+        }
+    </script>
 </body>
 </html>

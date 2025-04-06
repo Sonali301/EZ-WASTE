@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - E-Waste AI</title>
+    
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="faq.css">
+    
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+    <div class="logo">
+        <a href="home.html">
+            <img src="assets/logo/logo1.png" alt="E-Waste AI Logo">
+        </a>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="process.html">How It Works</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="sell.html">Sell</a></li>
+            <li><a href="redeem.html">Redeem</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="faq-hero">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about our e-waste recycling program.</p>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="faq-container">
+
+        <!-- Question 1 -->
+        <div class="faq-item">
+            <button class="faq-question">What is e-waste? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>E-waste includes discarded electronic devices like smartphones, laptops, and batteries. Proper disposal prevents environmental damage.</p>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="faq-item">
+            <button class="faq-question">What is EZ Waste? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>EZ Waste is our innovative e-commerce platform that allows users to sell their old electronics and buy refurbished devices. Our goal is to make e-waste recycling accessible and sustainable for everyone.</p>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="faq-item">
+            <button class="faq-question">How does EZ Waste recycle products? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>We provide a seamless process where users can sell their old electronics through our platform. These devices are then either refurbished for resale or properly recycled to extract valuable materials, ensuring minimal environmental impact.</p>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="faq-item">
+            <button class="faq-question">Why is e-waste recycling essential? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Over 50 million metric tons of e-waste are generated globally each year, with only about 20% being properly recycled. E-waste contains toxic substances like lead and mercury, which can harm the environment and human health if not disposed of correctly.</p>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="faq-item">
+            <button class="faq-question">Why should I recycle my e-waste? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Recycling e-waste prevents toxic chemicals from polluting the environment and helps recover valuable materials like gold and copper.</p>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="faq-item">
+            <button class="faq-question">How do I dispose of my old electronics? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Visit our platform, sell ,schedule a pickup, or drop your e-waste at our nearest  E-waste bin center.If u want more info visit How it works page</p>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="faq-item">
+            <button class="faq-question">What types of e-waste do you accept? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>We accept mobile phones, computers, printers, televisions, batteries, and other electronics.</p>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="faq-item">
+            <button class="faq-question">Are there any rewards for recycling? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Yes! You can earn reward points, discounts, or contribute to environmental causes through our recycling program.</p>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="faq-item">
+            <button class="faq-question">Are there any rewards for recycling? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Yes! You can earn reward points, discounts, or contribute to environmental causes through our recycling program.</p>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="faq-item">
+            <button class="faq-question">How can buyers purchase products? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Buyers can browse our online store, select refurbished electronics, and purchase them securely. We ensure quality testing and offer warranties on all products.</p>
+            </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="faq-item">
+            <button class="faq-question">How can I sell my old electronics? <span class="icon">+</span></button>
+            <div class="faq-answer">
+                <p>Simply list your used electronics on our platform, provide details about the condition, and receive offers from buyers. We also offer doorstep pickup for convenience.</p>
+            </div>
+
+    </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+    document.querySelectorAll(".faq-question").forEach(button => {
+        button.addEventListener("click", () => {
+            const faqItem = button.parentElement;
+            const answer = faqItem.querySelector(".faq-answer");
+            const icon = button.querySelector(".icon");
+
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                icon.textContent = "+";
+            } else {
+                document.querySelectorAll(".faq-answer").forEach(a => a.style.maxHeight = null);
+                document.querySelectorAll(".icon").forEach(i => i.textContent = "+");
+
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                icon.textContent = "−";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

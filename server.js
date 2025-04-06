@@ -714,12 +714,12 @@ app.post('/api/cart', async (req, res) => {
 const pages = ['home', 'shop', 'sell', 'view', 'edit', 'login', 'signup'];
 pages.forEach(page => {
   app.get(`/${page}`, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', `${page}.html`));
+    res.sendFile(path.join(__dirname, `${page}.html`));
   });
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'home.html'));
+  res.sendFile(path.join(__dirname,  'home.html'));
 });
 
 // Error Handling Middleware

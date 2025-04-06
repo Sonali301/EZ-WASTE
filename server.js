@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // Added for production session storage
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -22,7 +21,7 @@ const app = express();
 // Middleware Configurations
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname))); // Serve static files from root
+app.use(express.static(__dirname)); // Serve static files from root
 app.use(cors({
   origin: true,
   credentials: true,
@@ -30,25 +29,27 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// MongoDB Connection - Remove deprecated options
+// MongoDB Connection - Updated with error handling
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB Connection Error:', err));
+  .then(() => {
+    console.log('MongoDB Connected');
+    // Start server only after DB connection
+    const PORT = process.env.PORT || 10000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch(err => {
+    console.error('MongoDB Connection Error:', err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
-// Session Configuration with MongoStore
+// Session Configuration - Simplified for initial deployment
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
-    collectionName: 'sessions'
-  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
 }));
 
@@ -92,7 +93,7 @@ const upload = multer({
 });
 
 // Routes
-app.use(userRoutes); // User routes
+app.use(userRoutes);
 
 // Authentication Status Endpoint
 app.get('/auth/status', (req, res) => {
@@ -354,9 +355,6 @@ app.post('/api/cart', async (req, res) => {
   }
 });
 
-
-
-
 // Serve HTML Pages
 const pages = ['home', 'shop', 'sell', 'view', 'edit', 'login', 'signup'];
 pages.forEach(page => {
@@ -373,9 +371,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// Start Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 

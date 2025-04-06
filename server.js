@@ -376,7 +376,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // Added for production session storage
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -396,7 +396,7 @@ const app = express();
 // Middleware Configurations
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Better static files handling
+app.use(express.static(__dirname)); // Serve static files from root
 app.use(cors({
   origin: true,
   credentials: true,
@@ -404,27 +404,20 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// MongoDB Connection - Removed deprecated options
+// MongoDB Connection (removed deprecated options)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));
 
-// Session Configuration with MongoStore for production
-const sessionStore = MongoStore.create({
-  mongoUrl: process.env.MONGO_URI,
-  collectionName: 'sessions'
-});
-
+// Session Configuration with MongoStore
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: sessionStore, // Using MongoStore instead of MemoryStore
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
 }));
 
@@ -468,9 +461,9 @@ const upload = multer({
 });
 
 // Routes
-app.use(userRoutes); // User routes
+app.use(userRoutes);
 
-// Authentication Status Endpoint
+// Authentication Status
 app.get('/auth/status', (req, res) => {
   res.json({
     isAuthenticated: req.isAuthenticated(),
@@ -482,7 +475,7 @@ app.get('/auth/status', (req, res) => {
   });
 });
 
-// Product Routes
+// Product Routes (unchanged from your original)
 app.get('/api/products', async (req, res) => {
   try {
     const products = await Product.find()
@@ -587,7 +580,6 @@ app.put('/api/products/:id', upload.single('image'), async (req, res) => {
       data: product,
       message: 'Product updated successfully'
     });
-
   } catch (err) {
     console.error('Error updating product:', err);
     res.status(500).json({ 
@@ -635,7 +627,6 @@ app.delete('/api/products/:id', async (req, res) => {
       success: true,
       message: 'Product deleted successfully'
     });
-
   } catch (err) {
     console.error('Error deleting product:', err);
     res.status(500).json({ 
@@ -646,7 +637,7 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
-// Cart routes
+// Cart Routes (unchanged from your original)
 app.get('/api/cart', async (req, res) => {
   try {
     if (!req.isAuthenticated()) {
@@ -713,21 +704,19 @@ app.post('/api/cart', async (req, res) => {
 // Serve HTML Pages
 const pages = ['home', 'shop', 'sell', 'view', 'edit', 'login', 'signup'];
 pages.forEach(page => {
-  app.get(`/${page}`, (req, res) => {
-    res.sendFile(path.join(__dirname, `${page}.html`));
-  });
+  app.get(`/${page}`, (req, res) => res.sendFile(path.join(__dirname, `${page}.html`)));
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname,  'home.html'));
+  res.sendFile(path.join(__dirname, 'home.html'));
 });
 
-// Error Handling Middleware
+// Error Handling
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
 // Start Server
-const PORT = process.env.PORT || 10000; // Changed to match your deployment
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

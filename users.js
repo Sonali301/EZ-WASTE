@@ -1,4 +1,3 @@
-
 const path = require("path");
 const User = require("./m_user");
 
@@ -8,7 +7,7 @@ module.exports.renderSignupForm = (req, res) => {
 };
 
 // Handle Signup Logic
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
         const existingUser = await User.findOne({ email });
@@ -37,19 +36,12 @@ module.exports.renderLoginForm = (req, res) => {
     res.sendFile(path.join(__dirname, "login.html"));
 };
 
-// // Handle Login Logic
-// module.exports.login = (req, res) => {
-//     req.flash("success", "Successfully logged in!");
-//     const redirectUrl = req.session.returnTo || "/";
-//     delete req.session.returnTo;
-//     res.redirect(redirectUrl);
-// };
-
-exports.login = (req, res) => {
+// Handle Login Logic
+module.exports.login = (req, res) => {
     req.flash('success', 'Successfully logged in!');
     const redirectUrl = req.session.returnTo || '/';
 
-    // Store the logged-in user's data in localStorage
+    // Store user data in localStorage
     res.send(`
         <script>
             localStorage.setItem('currentUser', JSON.stringify(${JSON.stringify(req.user)}));
@@ -66,9 +58,3 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/");
     });
 };
-
-
-
-
-
-

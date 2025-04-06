@@ -2,19 +2,23 @@ const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new mongoose.Schema({
-    email: { 
-        type: String, 
-        required: true, 
-        unique: true,
-        index: true  // Explicit index
-    },
-    name: String  // Added name field if not present
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
+  name: {
+    type: String,
+    required: true
+  }
 });
 
-// Configure passport plugin to avoid duplicate indexes
-userSchema.plugin(passportLocalMongoose, { 
-    usernameField: "email",
-    usernameUnique: false  // Let the schema handle uniqueness
+// The plugin will add a `username` field by default.
+// But we already have `email`, so we tell it to use `email` instead.
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email',
+  usernameUnique: false // Let Mongoose handle uniqueness
 });
 
 module.exports = mongoose.model("User", userSchema);
